@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  LogStatusShip:
+    Type: AWS::Serverless::Function 
+    Properties:
+      PackageType: Image
+      # ImageUri is used for deployment. For local testing, SAM CLI will build the image based on Metadata.
+      ImageUri: some-placeholder-uri
+      Environment:
+        Variables:
+          DB_HOST: $POSTGRES_HOST
+          DB_USER: $POSTGRES_USER
+          DB_PASSWORD: $POSTGRES_PASSWORD
+          DB_NAME: $LOGS_DB
+      Events:
+        CloudWatchEvent:
+          Type: CloudWatchLogs
+          Properties:
+            LogGroupName: /aws/lambda/your_lambda_function
+            FilterPattern: '[level, ts, caller, msg]'
+    Metadata:
+      DockerTag: log-status-ship
+      DockerContext: .
+      Dockerfile: Dockerfile
