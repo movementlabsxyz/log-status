@@ -227,3 +227,9 @@
     transform: rotate(0deg);
   }
 }
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+}

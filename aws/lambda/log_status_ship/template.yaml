@@ -9,10 +9,10 @@ Resources:
       ImageUri: some-placeholder-uri
       Environment:
         Variables:
-          DB_HOST: $POSTGRES_HOST
-          DB_USER: $POSTGRES_USER
-          DB_PASSWORD: $POSTGRES_PASSWORD
-          DB_NAME: $LOGS_DB
+          DB_HOST: host.docker.internal
+          DB_USER: user
+          DB_PASSWORD: password
+          DB_NAME: Logs
       Events:
         CloudWatchEvent:
           Type: CloudWatchLogs

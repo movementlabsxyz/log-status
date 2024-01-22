@@ -9,7 +9,13 @@ interface PageSelectorProps {
 
 export function PageSelector({ currentPage, totalPages, onPageChange = ()=>{} }: PageSelectorProps) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+    <Box sx={{ 
+      display: 'grid', 
+      gridTemplateColumns: '1fr 1fr 1fr',
+      alignItems: 'center', 
+      justifyItems: 'center',
+      gap: 2 
+    }}>
       <Button 
         variant="outlined" 
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}

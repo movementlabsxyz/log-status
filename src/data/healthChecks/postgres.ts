@@ -12,7 +12,7 @@ export type PostgresConfig = {
 export class PostgresHealthCheckAsyncOperations implements HealthCheckAsyncOperations {
 
     private pool: Pool;
-    private static pageSize = 8;
+    private static pageSize = process.env.POSTGRES_PAGE_SIZE ? parseInt(process.env.POSTGRES_PAGE_SIZE) : 32;
 
     constructor(postgresConfig: PostgresConfig) {
         this.pool = new Pool(postgresConfig);

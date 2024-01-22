@@ -8,12 +8,20 @@ from psycopg2.extras import execute_batch
 
 # Function to parse log messages
 def parse_log(log_message):
-    json.loads(log_message)
+    try: 
+        return json.loads(log_message)
+    except:
+        return None
 
 # Function to process log event
 def process_log_event(log_event):
-    message = log_event.get('message', '')
-    parsed_log = parse_log(message)
+    
+    message = log_event.get('message', None)
+    parsed_log = None if message is None else parse_log(message)
+    
+    if parsed_log is None:
+        return None
+    
     if all(key in parsed_log for key in ['health_check', 'group', 'reason', 'status']):
         parsed_log['status'] = True if parsed_log['status'].upper() == 'PASS' else False
         return parsed_log
@@ -30,7 +38,7 @@ def insert_to_db(log_data):
             host=os.environ['DB_HOST']
         )
         cursor = conn.cursor()
-        query = "INSERT INTO LatestHealthChecks (health_check, group, reason, status) VALUES (%s, %s, %s, %s)"
+        query = "INSERT INTO LatestHealthChecks (health_check, \"group\", reason, status) VALUES (%s, %s, %s, %s)"
         execute_batch(cursor, query, [(data['health_check'], data['group'], data['reason'], data['status']) for data in log_data])
         conn.commit()
     except Exception as e:

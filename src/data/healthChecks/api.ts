@@ -25,7 +25,6 @@ export class ApiHealthCheckAsyncOperations implements HealthCheckAsyncOperations
             }
         });
         const data = await post.json();
-        console.log(data);
         return data.healthChecks;
 
     }
