@@ -38,3 +38,6 @@ next-env.d.ts
 # python
 venv
 .aws-sam
+
+__pycache__
+.pytest_cache
