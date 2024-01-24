@@ -30,3 +30,9 @@ jobs:
         run: |
           cd aws/lambda/log_status_ship
           docker buildx build --platform linux/amd64,linux/arm64 -t mvlbs/log-status-lambda-ship:latest --push .
+
+      - name: Build and push Docker image (aws/lambda/log_status_ship)
+        run: |
+            cd tasks/initialize-db
+            docker buildx build --platform linux/amd64,linux/arm64 -t mvlbs/log-status-initialize-db:latest --push .
+  
