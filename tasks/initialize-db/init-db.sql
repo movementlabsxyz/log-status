@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS LatestHealthChecks (
 
 -- Add health checks
 INSERT INTO LatestHealthChecks (health_check, "group", status, reason) VALUES 
-('log-table-creation', 'LogStatus', true, 'Pipeline was able to initialize LogStatus table.'),
+('log-table-creation', 'LogStatus', true, 'Pipeline was able to initialize LogStatus table.');
