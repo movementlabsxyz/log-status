@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { MockHealthCheckAsyncOperations, PostgresHealthCheckAsyncOperations } from '@/data'
 import { HealthCheck, HealthCheckPage } from '@/util';
 
+console.log(process.env.POSTGRES_HOST, process.env.POSTGRES_PORT);
 const operations = process.env.MOCK ?
   new MockHealthCheckAsyncOperations() :
   new PostgresHealthCheckAsyncOperations({
