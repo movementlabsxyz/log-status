@@ -14,8 +14,12 @@ export class PostgresHealthCheckAsyncOperations implements HealthCheckAsyncOpera
     private pool: Pool;
     private static pageSize = process.env.POSTGRES_PAGE_SIZE ? parseInt(process.env.POSTGRES_PAGE_SIZE) : 32;
 
-    constructor(postgresConfig: PostgresConfig) {
-        this.pool = new Pool(postgresConfig);
+    constructor() {
+        this.pool = new Pool({
+            ssl : {
+                rejectUnauthorized: process.env.PQ_SSL_REJECT_UNAUTHORIZED === "true"
+            }
+        });
     }
 
     private async executePostgresQuery(query: string, params: any[] = []): Promise<any> {

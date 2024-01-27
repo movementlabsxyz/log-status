@@ -2,16 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { MockHealthCheckAsyncOperations, PostgresHealthCheckAsyncOperations } from '@/data'
 import { HealthCheck, HealthCheckPage } from '@/util';
 
-console.log(process.env.POSTGRES_HOST, process.env.POSTGRES_PORT);
 const operations = process.env.MOCK ?
   new MockHealthCheckAsyncOperations() :
-  new PostgresHealthCheckAsyncOperations({
-    user: process.env.POSTGRES_USER ?? "user",
-    host: process.env.POSTGRES_HOST ?? "localhost",
-    database: process.env.POSTGRES_DB ?? "Logs",
-    password: process.env.POSTGRES_PASSWORD ?? "password",
-    port: parseInt(process.env.POSTGRES_PORT ?? "5432")
-  });
+  new PostgresHealthCheckAsyncOperations();
 
 type RequestData = {
     page ? : number
