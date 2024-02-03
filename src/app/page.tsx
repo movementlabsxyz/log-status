@@ -4,7 +4,7 @@ import styles from './page.module.css';
 import { ApiHealthCheckAsyncOperations } from '@/data';
 import { components } from '@/presentation';
 import { useQuery, QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Skeleton } from '@mui/material';
+import { Alert, Skeleton, Snackbar } from '@mui/material';
 import { HealthChecks, Region } from '@/util';
 import { useRouter, useSearchParams } from 'next/navigation';
 import GitHub from '@mui/icons-material/GitHub';
@@ -48,6 +48,8 @@ function Home() {
     router.push(`/?page=${newPage}`, undefined);
   };
 
+
+
   return (
     <div className={styles.container}>
       <components.HeaderStd
@@ -64,7 +66,7 @@ function Home() {
         }}
       />
       <main className={styles.main}>
-        {isLoading ? (
+        {isLoading||error ? (
           <>
             <Skeleton variant="rectangular" width="100%" height={118} />
             <Skeleton variant="text" />
@@ -72,7 +74,7 @@ function Home() {
             <Skeleton variant="text" />
           </>
         ) : error ? (
-          <span>Error: {error.message}</span>
+          <span>An Err</span>
         ) : (
           <section style={{
             display: 'flex',
@@ -100,7 +102,7 @@ function Home() {
           <components.PageSelector
             onPageChange={handlePageChange}
             totalPages={healthChecks?.totalPages || 0}
-            currentPage={page + 1}/>
+            currentPage={healthChecks?.totalPages ? page + 1 : 0}/>
         </Container>
       </main>
       <footer className={styles.footer}>
@@ -116,6 +118,12 @@ function Home() {
         </Box>
       </Container>
     </footer>
+    {error && <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+      >
+        <Alert severity="error">{error?.message}</Alert>
+      </Snackbar>}
     </div>
   );
 }
